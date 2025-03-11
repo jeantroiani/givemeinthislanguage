@@ -5,14 +5,12 @@
     [key: string]: LanguageSet;
   };
 
-  const typedLanguagesMap: LanguagesMapType = languagesMap;
-
-
 
   let is24HourFormat: boolean = true;
   let randomTime: string = ''
   let userInput: string = '';
   let result : boolean  = false;
+  let currentStreak: number = 0;
 
   let language: languages = languages.english;
 
@@ -30,10 +28,14 @@
     const minutes = Math.floor(Math.random() * 60);
     const formattedHours = is24HourFormat ? hours : (hours === 0 ? 12 : hours);
     const period = !is24HourFormat ? (hours < 12 ? 'AM' : 'PM') : '';
-    return `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${period}`.trim();
+    return `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`.trim();
   }
 
-
+  function convertTo12HourFormat(time: string): string {
+    const [hours, minutes] = time.split(':').map(Number);
+    const formattedHours = hours === 0 ? 12 : (hours > 12 ? hours - 12 : hours);
+    return `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+  }
 
   function validateInput() {
     const regex = /^[a-zA-Z\s]*$/;
@@ -44,8 +46,11 @@
 
 
   function handleSubmit(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
-    const userTime = languagesCoversionFunctionMap[language](userInput);
-    result = userTime === randomTime;
+    const userTime = languagesCoversionFunctionMap[language](userInput.trim());
+    result = userTime === convertTo12HourFormat(randomTime);
+    if (result) {
+      currentStreak += 1;
+    }
   }
 </script>
 
@@ -60,8 +65,9 @@
  {is24HourFormat ? '24' : '12'} Hour Format
 </button>
 <button onclick={() => { randomTime = getRandomTime(is24HourFormat); }}>Get Random Time</button>
-<input type="text" bind:value={userInput} placeholder="Enter text" oninput={validateInput} />
+<input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" oninput={validateInput} />
 <button onclick={handleSubmit}>Submit</button>
 
+<p>Current Streak: {currentStreak}</p>
 <p>Your answer is: {result ? 'correct' : 'incorrect'}</p>
 

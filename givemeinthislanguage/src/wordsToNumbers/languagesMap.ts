@@ -1,5 +1,5 @@
 import { convertEnglishTextToTime } from "./english/convertFunction";
-import { english } from "./english/numbersMap";
+import { englishNumberWordsMap } from "./english/numbersMap";
 import { convertJapaneseTimeToText } from "./japanese/convertFunction";
 import { japanese } from "./japanese/numbersMap";
 
@@ -11,13 +11,13 @@ enum languages {
 export type LanguageSet = { [key: string]: number }
 
 const languagesMap: { [key in languages]: LanguageSet } = {
-    [languages.english]: english,
+    [languages.english]: englishNumberWordsMap,
     [languages.japanese]: japanese,
 };
 
-type ConversionFunction = (text: string) => string;
+export type ConversionFunction = (text: string) => string | undefined;
 
-export const languagesCoversionFunctionMap: { [key in languages]: ConversionFunction } = {
+export const languagesCoversionFunctionMap: { [key in languages ]: ConversionFunction } = {
     [languages.english]: convertEnglishTextToTime,
     [languages.japanese]: convertJapaneseTimeToText,
 };
