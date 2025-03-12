@@ -1,4 +1,4 @@
-import { MIDNIGHT } from '../variables';
+import { MIDNIGHT, NOON } from '../variables';
 import { convertEnglishTextToTime } from './convertFunction';
 import { describe, test, expect, it } from 'vitest';
 
@@ -6,8 +6,8 @@ import { describe, test, expect, it } from 'vitest';
 describe('convertEnglishTextToTime', () => {
   const testCases = [
     { input: "midnight", expected: MIDNIGHT },
-    { input: "noon", expected: "12:00" },
-    { input: "midday", expected: "12:00" },
+    { input: "noon", expected: NOON },
+    { input: "midday", expected: NOON },
     { input: "three o'clock", expected: "03:00" },
     { input: "three twenty-five", expected: "03:25" },
     { input: "half past four", expected: "04:30" },
