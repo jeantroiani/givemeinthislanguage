@@ -1,11 +1,11 @@
 <script lang="ts">
-  import PracticeTime from './lib/practiceTime.svelte'
+  import Application from './lib/Application.svelte';
 </script>
 
-<main>
-  <h1 style="border-bottom: 1px solid #001; padding-bottom: 16px">Give me in this language</h1>
+<main style="display: flex; height: 100%; flex-direction: column;">
+  <h1 style="border-bottom: 1px solid #333; padding-bottom: 16px">Dimelo</h1>
   <div class="card">
-    <PracticeTime />
+      <Application />
   </div>
 
 </main>

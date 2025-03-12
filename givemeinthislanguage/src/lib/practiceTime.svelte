@@ -1,24 +1,16 @@
 <script lang="ts">
-  import languages, { languagesData } from "../wordsToNumbers/languagesMap";
+  import { languagesData } from "../wordsToNumbers/languagesMap";
+
   import { MIDNIGHT } from "../wordsToNumbers/variables";
+	import pixelClock from '../assets/pixel-clock.png';
 
-  let is24HourFormat: boolean = true;
-  let randomTime: string = MIDNIGHT;
-  let userInput: string = '';
-  let result: boolean | null = null;
-  let currentStreak: number = 0;
-  let fails: number = 0;
+  let randomTime: string = $state(MIDNIGHT);
+  let userInput: string = $state('');
+  let result: boolean | null = $state(null);
+  let currentStreak: number = $state(0);
+  let fails: number = $state(0);
 
-  let language: languages = languages.English;
-
-  function handleLanguageChange(event: Event) {
-    const selectElement = event.target as HTMLSelectElement;
-    language = selectElement.value as languages;
-  }
-
-  function toggleTimeFormat() {
-    is24HourFormat = !is24HourFormat;
-  }
+  let {language, is24HourFormat} = $props();
 
   function getRandomTime(): string {
     const hours = Math.floor(Math.random() * (is24HourFormat ? 24 : 12));
@@ -57,27 +49,30 @@
   };
 </script>
 
+<div style="flex: 1 auto; display: flex; width: 320px; flex-direction: column;">
+
 <h2 style="font-family: {languagesData[language]?.titleFontFamily || 'inherit'};">{languagesData[language].title}</h2>
 
-<div>
-  <select bind:value={language} onchange={handleLanguageChange}>
-    <option value={languages.English}>{languages.English.toUpperCase()}</option>
-    <option value={languages.Japanese}>{languages.Japanese.toUpperCase()}</option>
-  </select>
-
-  <button onclick={toggleTimeFormat}>
-    {is24HourFormat ? '24' : '12'} Hour Format
-  </button>
-</div>
 
 <div style="padding: 24px 0;">
   <button onclick={generateRandomTime}>Get Random Time</button>
-  <p style="font-family: 'Orbitron'; background-color: aquamarine; display: inline; padding: 12px; border-radius: 8px;">{randomTime}</p>
+  <p style="font-family: 'Orbitron'; 
+    color: #555;
+    font-weight: bold;
+    background-image: url({pixelClock});
+    background-position: -21px -43px;
+    background-size: 190px;
+    width: 125px;
+    height: 125px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;">{randomTime}</p>
 </div>
 
+<div>
 <input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" onkeypress={onKeyPress} />
-
 <button onclick={handleSubmit}>Submit</button>
+</div>
 
 <div style="display: flex; justify-content: center;">
   <p style="padding: 6px;">Current Streak: {currentStreak}</p>
@@ -88,6 +83,7 @@
   <p>Your answer is incorrect.</p>
   <p>Try phrases like: "midnight", "three o'clock", "quarter past seven", "three-thirty", "three forty".</p>
 {/if}
+</div>
 
 
 
