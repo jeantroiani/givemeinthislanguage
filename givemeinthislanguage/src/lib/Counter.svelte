@@ -33,13 +33,6 @@
     return `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 
-  function validateInput() {
-    const regex = /^[a-zA-Z\s]*$/;
-    if (!regex.test(userInput)) {
-    languagesCoversionFunctionMap[language](userInput)
-    }
-  }
-
   function generateRandomTime() {
     randomTime = getRandomTime();
   }
@@ -56,6 +49,12 @@
       fails += 1;
     }
   }
+   const onKeyPress = (e: KeyboardEvent) => {
+          const regex = /^[a-zA-Z-' ]*$/;
+          if (!regex.test(e.key)) {
+            e.preventDefault();
+          }
+  };
 </script>
 
 <div>
@@ -78,7 +77,7 @@
 
 
 
-<input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" oninput={validateInput} />
+<input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" onkeypress={onKeyPress}/>
 
 <button onclick={handleSubmit}>Submit</button>
 
