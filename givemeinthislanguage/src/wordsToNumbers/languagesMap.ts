@@ -8,19 +8,38 @@ enum Languages {
     Japanese = 'japanese',
 }
 
+export type ConversionFunction = (text: string) => string | undefined;
 export type LanguageSet = { [key: string]: number };
+export type LanguageData = {
+    [key: string]: {
+        numberWordsMap: LanguageSet;
+        conversionFunction: ConversionFunction;
+        title: string;
+        titleFontFamily?: string;
+    };
+}
 
 const languagesMap: { [key in Languages]: LanguageSet } = {
     [Languages.English]: englishNumberWordsMap,
     [Languages.Japanese]: japanese,
 };
 
-export type ConversionFunction = (text: string) => string | undefined;
 
-export const languagesConversionFunctionMap: { [key in Languages]: ConversionFunction } = {
-    [Languages.English]: convertEnglishTextToTime,
-    [Languages.Japanese]: convertJapaneseTimeToText,
+const languagesData: LanguageData = {
+    [Languages.English]: {
+        numberWordsMap: englishNumberWordsMap,
+        conversionFunction: convertEnglishTextToTime,
+        title: 'What time is it?',
+    },
+    [Languages.Japanese]: {
+        numberWordsMap: japanese,
+        conversionFunction: convertJapaneseTimeToText,
+        title: '今何時ですか？',
+        titleFontFamily: 'Noto Sans JP',
+    },
 };
+
+export { languagesData };
 
 export { languagesMap };
 

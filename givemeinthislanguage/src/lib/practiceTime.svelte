@@ -1,5 +1,5 @@
 <script lang="ts">
-  import languages, { languagesConversionFunctionMap } from "../wordsToNumbers/languagesMap";
+  import languages, { languagesData } from "../wordsToNumbers/languagesMap";
   import { MIDNIGHT } from "../wordsToNumbers/variables";
 
   let is24HourFormat: boolean = true;
@@ -38,7 +38,7 @@
   }
 
   function handleSubmit() {
-    const userTime = languagesConversionFunctionMap[language](userInput.trim());
+    const userTime = languagesData[language].conversionFunction(userInput.trim());
     const randomTimeConverted = randomTime === MIDNIGHT ? randomTime : convertTo12HourFormat(randomTime);
     result = userTime === randomTimeConverted;
     if (result) {
@@ -57,6 +57,8 @@
   };
 </script>
 
+<h2 style="font-family: {languagesData[language]?.titleFontFamily || 'inherit'};">{languagesData[language].title}</h2>
+
 <div>
   <select bind:value={language} onchange={handleLanguageChange}>
     <option value={languages.English}>{languages.English.toUpperCase()}</option>
@@ -70,7 +72,7 @@
 
 <div style="padding: 24px 0;">
   <button onclick={generateRandomTime}>Get Random Time</button>
-  <p style="background-color: aquamarine; display: inline; padding: 12px; border-radius: 8px;">{randomTime}</p>
+  <p style="font-family: 'Orbitron'; background-color: aquamarine; display: inline; padding: 12px; border-radius: 8px;">{randomTime}</p>
 </div>
 
 <input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" onkeypress={onKeyPress} />
