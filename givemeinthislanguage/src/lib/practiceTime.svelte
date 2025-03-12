@@ -1,5 +1,5 @@
 <script lang="ts">
-  import languages, { languagesCoversionFunctionMap } from "../wordsToNumbers/languagesMap";
+  import languages, { languagesConversionFunctionMap } from "../wordsToNumbers/languagesMap";
   import { MIDNIGHT } from "../wordsToNumbers/variables";
 
   let is24HourFormat: boolean = true;
@@ -9,7 +9,7 @@
   let currentStreak: number = 0;
   let fails: number = 0;
 
-  let language: languages = languages.english;
+  let language: languages = languages.English;
 
   function handleLanguageChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
@@ -38,7 +38,7 @@
   }
 
   function handleSubmit() {
-    const userTime = languagesCoversionFunctionMap[language](userInput.trim());
+    const userTime = languagesConversionFunctionMap[language](userInput.trim());
     const randomTimeConverted = randomTime === MIDNIGHT ? randomTime : convertTo12HourFormat(randomTime);
     result = userTime === randomTimeConverted;
     if (result) {
@@ -59,8 +59,8 @@
 
 <div>
   <select bind:value={language} onchange={handleLanguageChange}>
-    <option value={languages.english}>{languages.english.toUpperCase()}</option>
-    <option value={languages.japanese}>{languages.japanese.toUpperCase()}</option>
+    <option value={languages.English}>{languages.English.toUpperCase()}</option>
+    <option value={languages.Japanese}>{languages.Japanese.toUpperCase()}</option>
   </select>
 
   <button onclick={toggleTimeFormat}>
