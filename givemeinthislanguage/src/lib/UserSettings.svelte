@@ -1,26 +1,33 @@
-
 <script lang="ts">
-  import languages from "../wordsToNumbers/languagesMap";
-  let {language, handleLanguageChange, is24HourFormat, toggleTimeFormat} = $props();
+  import { Select, Toggle, Label } from 'flowbite-svelte';
+  import { Languages } from "../wordsToNumbers/languagesMap";
 
+  export let language: string;
+  export let handleLanguageChange: (event: Event) => void;
+  export let is24HourFormat: boolean;
+  export let toggleTimeFormat: () => void;
+
+  const languagesOptions = Object.values(Languages).map((language) => ({
+    value: language,
+    name: language.charAt(0).toUpperCase() + language.slice(1)
+  }));
 </script>
 
-<div style="flex: 1 auto 320px; display: flex; width: 320px; flex-direction: column; border-right: 1px solid grey; padding: 0 24px;">
-    <p style="padding: 6px; margin-bottom: 24px">Preferences:</p>
-        <select style="margin-bottom: 24px" bind:value={language} onchange={handleLanguageChange}>
-          <option value={languages.English}>{languages.English.toUpperCase()}</option>
-          <option value={languages.Japanese}>{languages.Japanese.toUpperCase()}</option>
-        </select>
-      
-        <button onclick={toggleTimeFormat} class="btn preset-filled-surface-500">
-          {is24HourFormat ? '24' : '12'} Hour Format
-        </button>
+<div>
+  <p class="preferences-title">Preferences:</p>
+  <Label>
+    Select Language:
+    <Select class="mt-2" items={languagesOptions} bind:value={language} on:change={handleLanguageChange} />
+  </Label>
+  <Toggle onclick={toggleTimeFormat} checked={is24HourFormat}> 24 Hour Format</Toggle>
 </div>
 
 <style>
-    div {
-        border-right: 1px solid grey;
-        padding: 0 24px;
-        flex: 1 auto 320px; display: flex; width: 320px; flex-direction: column; border-right: 1px solid grey; padding: 0 24px;
-    }
+  div {
+    padding: 24px;
+  }
+  .preferences-title {
+    padding: 6px;
+    margin-bottom: 24px;
+  }
 </style>

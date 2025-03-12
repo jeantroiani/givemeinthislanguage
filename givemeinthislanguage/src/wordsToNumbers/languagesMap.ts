@@ -3,7 +3,7 @@ import { englishNumberWordsMap } from "./english/numbersMap";
 import { convertJapaneseTimeToText } from "./japanese/convertFunction";
 import { japanese } from "./japanese/numbersMap";
 
-enum Languages {
+export enum Languages {
     English = 'english',
     Japanese = 'japanese',
 }

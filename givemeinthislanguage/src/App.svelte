@@ -1,11 +1,20 @@
 <script lang="ts">
   import Application from './lib/Application.svelte';
+  import {  P } from 'flowbite-svelte';
+
 </script>
 
-<main style="display: flex; height: 100%; flex-direction: column;">
-  <h1 style="border-bottom: 1px solid #333; padding-bottom: 16px">Dimelo</h1>
+<main>
+  <P size="4xl">Dimelo</P>
+  
   <div class="card">
       <Application />
   </div>
 
 </main>
+
+<style>
+  main {
+    display: flex; height: 100%; flex-direction: column
+  }
+</style>

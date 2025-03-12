@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { Input, P } from 'flowbite-svelte';
+  import { Button } from 'flowbite-svelte';
+
   import { languagesData } from "../wordsToNumbers/languagesMap";
 
   import { MIDNIGHT } from "../wordsToNumbers/variables";
@@ -10,7 +13,7 @@
   let currentStreak: number = $state(0);
   let fails: number = $state(0);
 
-  let {language, is24HourFormat} = $props();
+  const {language, is24HourFormat} = $props();
 
   function getRandomTime(): string {
     const hours = Math.floor(Math.random() * (is24HourFormat ? 24 : 12));
@@ -47,15 +50,16 @@
       e.preventDefault();
     }
   };
+
 </script>
 
-<div style="flex: 1 auto; display: flex; width: 320px; flex-direction: column;">
+<div style="flex: 1 auto; display: flex; width: 320px; flex-direction: column; text-align: center;">
 
-<h2 style="font-family: {languagesData[language]?.titleFontFamily || 'inherit'};">{languagesData[language].title}</h2>
+<P align='center' size="4xl" style="font-family: {languagesData[language]?.titleFontFamily || 'inherit'};">{languagesData[language].title}</P>
 
 
 <div style="padding: 24px 0;">
-  <button onclick={generateRandomTime}>Get Random Time</button>
+  <Button color="dark" class="btn preset-filled-surface-500" onclick={generateRandomTime}>Get Random Time</Button >
   <p style="font-family: 'Orbitron'; 
     color: #555;
     font-weight: bold;
@@ -70,8 +74,8 @@
 </div>
 
 <div>
-<input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" onkeypress={onKeyPress} />
-<button onclick={handleSubmit}>Submit</button>
+<Input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" onkeypress={onKeyPress} />
+<Button color="dark" onclick={handleSubmit}>Submit</Button >
 </div>
 
 <div style="display: flex; justify-content: center;">
@@ -84,7 +88,4 @@
   <p>Try phrases like: "midnight", "three o'clock", "quarter past seven", "three-thirty", "three forty".</p>
 {/if}
 </div>
-
-
-
 
