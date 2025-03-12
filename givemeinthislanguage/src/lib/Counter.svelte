@@ -1,16 +1,13 @@
 <script lang="ts">
-  import languages, { languagesCoversionFunctionMap, languagesMap, type LanguageSet } from "../wordsToNumbers/languagesMap";
-
-  type LanguagesMapType = {
-    [key: string]: LanguageSet;
-  };
-
+  import languages, { languagesCoversionFunctionMap } from "../wordsToNumbers/languagesMap";
+  import { MIDNIGHT } from "../wordsToNumbers/variables";
 
   let is24HourFormat: boolean = true;
-  let randomTime: string = ''
+  let randomTime: string = MIDNIGHT;
   let userInput: string = '';
-  let result : boolean  = false;
+  let result : boolean | null = null;
   let currentStreak: number = 0;
+  let fails: number = 0;
 
   let language: languages = languages.english;
 
@@ -23,7 +20,7 @@
     is24HourFormat = !is24HourFormat;
   }
   
-  function getRandomTime(is24HourFormat: boolean): string {
+  function getRandomTime(): string {
     const hours = Math.floor(Math.random() * (is24HourFormat ? 24 : 12));
     const minutes = Math.floor(Math.random() * 60);
     const formattedHours = is24HourFormat ? hours : (hours === 0 ? 12 : hours);
@@ -39,34 +36,63 @@
   function validateInput() {
     const regex = /^[a-zA-Z\s]*$/;
     if (!regex.test(userInput)) {
-    const userTime = languagesCoversionFunctionMap[language](userInput)
+    languagesCoversionFunctionMap[language](userInput)
     }
   }
 
+  function generateRandomTime() {
+    randomTime = getRandomTime();
+  }
 
-  function handleSubmit(event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) {
+
+  function handleSubmit() {
     const userTime = languagesCoversionFunctionMap[language](userInput.trim());
-    result = userTime === convertTo12HourFormat(randomTime);
+    const randomTimeConverted = randomTime === MIDNIGHT ? randomTime : convertTo12HourFormat(randomTime);
+    result = userTime === randomTimeConverted;
     if (result) {
       currentStreak += 1;
+      generateRandomTime()
+    } else {
+      fails += 1;
     }
   }
 </script>
+
+<div>
 
 <select bind:value={language} onchange={handleLanguageChange}>
   <option value={languages.english}>{languages.english.toUpperCase()}</option>
   <option value={languages.japanese}>{languages.japanese.toUpperCase()}</option>
 </select>
 
-<p>The random time is: {randomTime}</p>
-
 <button onclick={toggleTimeFormat}>
  {is24HourFormat ? '24' : '12'} Hour Format
 </button>
-<button onclick={() => { randomTime = getRandomTime(is24HourFormat); }}>Get Random Time</button>
+</div>
+<div style="padding: 24px 0;">
+
+<button onclick={generateRandomTime}>Get Random Time</button>
+
+<p style="background-color: aquamarine; display: inline; padding: 12px; border-radius: 8px;">{randomTime}</p>
+</div>
+
+
+
 <input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" oninput={validateInput} />
+
 <button onclick={handleSubmit}>Submit</button>
 
-<p>Current Streak: {currentStreak}</p>
-<p>Your answer is: {result ? 'correct' : 'incorrect'}</p>
+<div style="display: flex;  justify-content: center;">
+  <p style="padding: 6px;">Current Streak: {currentStreak}</p>
+  <p style="padding: 6px;">Fails: {fails}</p>
+</div>
+
+{#if userInput && result === false}
+  <p>Your answer is incorrect.</p>
+  <p>Try phrases like: "midnight", "three o'clock", "quarter past seven", "three-thirty", "three forty".</p>
+{/if}
+
+
+
+
 
