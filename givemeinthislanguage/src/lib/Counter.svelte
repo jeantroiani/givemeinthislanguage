@@ -27,7 +27,6 @@
     const hours = Math.floor(Math.random() * (is24HourFormat ? 24 : 12));
     const minutes = Math.floor(Math.random() * 60);
     const formattedHours = is24HourFormat ? hours : (hours === 0 ? 12 : hours);
-    const period = !is24HourFormat ? (hours < 12 ? 'AM' : 'PM') : '';
     return `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`.trim();
   }
 
