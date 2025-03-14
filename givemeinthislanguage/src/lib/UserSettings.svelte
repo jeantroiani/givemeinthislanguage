@@ -1,33 +1,50 @@
 <script lang="ts">
-  import { Select, Toggle, Label } from 'flowbite-svelte';
+  import { Select, Toggle, Label, P } from 'flowbite-svelte';
   import { Languages } from "../wordsToNumbers/languagesMap";
+  import { lessons, LessonTypes } from '../variables/lessons';
 
-  export let language: string;
-  export let handleLanguageChange: (event: Event) => void;
-  export let is24HourFormat: boolean;
-  export let toggleTimeFormat: () => void;
+  let {is24HourFormat, selectedLanguage, handleLanguageChange, toggleTimeFormat, selectedLesson} = $props()
 
-  const languagesOptions = Object.values(Languages).map((language) => ({
+
+  const languagesOptions = Object.values(Languages).map(language => ({
     value: language,
-    name: language.charAt(0).toUpperCase() + language.slice(1)
+    name: capitalize(language)
   }));
+
+  const lessonsOptions = Object.values(lessons).map(lesson => ({
+    value: lesson.title,
+    name: capitalize(lesson.title)
+  }));
+
+  function handleSelectLesson(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    selectedLesson = selectElement.value as LessonTypes;
+  }
+
+  function capitalize(str: string): string {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 </script>
 
 <div>
-  <p class="preferences-title">Preferences:</p>
-  <Label>
-    Select Language:
-    <Select class="mt-2" items={languagesOptions} bind:value={language} on:change={handleLanguageChange} />
+  <Label class="mt-4">
+    Practice Language:
+    <Select class="mt-2" items={languagesOptions} bind:value={selectedLanguage} on:change={handleLanguageChange} />
   </Label>
-  <Toggle onclick={toggleTimeFormat} checked={is24HourFormat}> 24 Hour Format</Toggle>
+  
+  <Label class="mt-4">
+    Practice Lesson:
+    <Select class="mt-2" items={lessonsOptions} bind:value={selectedLesson} on:change={handleSelectLesson} />
+  </Label>
+  
+  <Label class="mt-4">
+    Time Format:
+    <Toggle class='mt-2' onclick={toggleTimeFormat} checked={is24HourFormat}> 24 Hour Format</Toggle>
+  </Label>
 </div>
 
 <style>
   div {
     padding: 24px;
-  }
-  .preferences-title {
-    padding: 6px;
-    margin-bottom: 24px;
   }
 </style>

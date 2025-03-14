@@ -1,11 +1,11 @@
 <script lang="ts">
+  import { LessonTypes } from "../variables/lessons";
   import languages from "../wordsToNumbers/languagesMap";
+  import NavBar from "./components/NavBar.svelte";
   import PracticeTime from "./PracticeTime.svelte";
-  import UserSettings from './UserSettings.svelte';
-
-
   let language: languages = $state(languages.English);
-  let is24HourFormat: boolean = $state(true);
+  let is24HourFormat: boolean = $state(false);
+  let selectedLesson: LessonTypes = LessonTypes.Time;
 
   function handleLanguageChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
@@ -16,18 +16,27 @@
     is24HourFormat = !is24HourFormat;
   }
 
-
 </script>
 
-<div style="display: flex; width: auto; flex-direction: row; height: 100%;">
-    <UserSettings 
-      toggleTimeFormat={toggleTimeFormat} 
-      language={language} 
-      is24HourFormat={is24HourFormat} 
-      handleLanguageChange={handleLanguageChange}
-    />
+<div class="container">
+  <NavBar  {toggleTimeFormat} 
+    selectedLanguage={language} 
+    {is24HourFormat} 
+    {handleLanguageChange}
+    selectedLesson={selectedLesson}/>
+  <div>
   <PracticeTime 
-    language={language} 
-    is24HourFormat={is24HourFormat}
+    selectedLanguage={language} 
+    {is24HourFormat}
   />
+  </div>
 </div>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 100%;
+  }
+</style>

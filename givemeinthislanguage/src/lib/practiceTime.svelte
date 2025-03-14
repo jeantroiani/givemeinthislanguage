@@ -5,15 +5,16 @@
   import { languagesData } from "../wordsToNumbers/languagesMap";
 
   import { MIDNIGHT } from "../wordsToNumbers/variables";
-	import pixelClock from '../assets/pixel-clock.png';
+  import pixelClock from '../assets/pixel-clock.png';
+  import pixelStreet from '../assets/pixel-street.png';
 
-  let randomTime: string = $state(MIDNIGHT);
+  let randomTime: string = $state(getRandomTime());
   let userInput: string = $state('');
   let result: boolean | null = $state(null);
   let currentStreak: number = $state(0);
   let fails: number = $state(0);
 
-  const {language, is24HourFormat} = $props();
+  const {selectedLanguage, is24HourFormat} = $props();
 
   function getRandomTime(): string {
     const hours = Math.floor(Math.random() * (is24HourFormat ? 24 : 12));
@@ -33,7 +34,7 @@
   }
 
   function handleSubmit() {
-    const userTime = languagesData[language].conversionFunction(userInput.trim());
+    const userTime = languagesData[selectedLanguage].conversionFunction(userInput.trim());
     const randomTimeConverted = randomTime === MIDNIGHT ? randomTime : convertTo12HourFormat(randomTime);
     result = userTime === randomTimeConverted;
     if (result) {
@@ -42,6 +43,11 @@
     } else {
       fails += 1;
     }
+  }
+
+    function handlePass() {
+      generateRandomTime();
+      fails += 1;
   }
 
   const onKeyPress = (e: KeyboardEvent) => {
@@ -53,39 +59,51 @@
 
 </script>
 
-<div style="flex: 1 auto; display: flex; width: 320px; flex-direction: column; text-align: center;">
+<div style="flex: 1 auto; display: flex; flex-direction: column; text-align: center;">
 
-<P align='center' size="4xl" style="font-family: {languagesData[language]?.titleFontFamily || 'inherit'};">{languagesData[language].title}</P>
+  <div class='lesson-title'>
+<P align='center' size="4xl" style="font-family: {languagesData[selectedLanguage]?.titleFontFamily || 'inherit'};">{languagesData[selectedLanguage].title}</P>
+</div>
+<div style='background-image: url({pixelStreet}); background-size: cover; display: flex; width: 100%; height: 400px; justify-content: center; align-items: center; margin: 0 0 64px;'>
 
-
-<div style="padding: 24px 0;">
-  <Button color="dark" class="btn preset-filled-surface-500" onclick={generateRandomTime}>Get Random Time</Button >
-  <p style="font-family: 'Orbitron'; 
-    color: #555;
+<div style="padding: 0;">
+  <P style="font-family: 'Orbitron'; 
     font-weight: bold;
+    font-size: 2.5rem;
     background-image: url({pixelClock});
-    background-position: -21px -43px;
-    background-size: 190px;
-    width: 125px;
-    height: 125px;
+    background-position: -18px -132px;
+    background-size: 410px;
+    width:  320px;
+    height: 190px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;">{randomTime}</p>
-</div>
+    display: flex;
 
-<div>
-<Input type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" onkeypress={onKeyPress} />
-<Button color="dark" onclick={handleSubmit}>Submit</Button >
+    justify-content: center;">{randomTime}</P>
+</div>
+</div>
+<div style='max-width: 320px; text-align: center; display: flex; flex-direction: column; margin: 0 auto;'>
+<Input  type="text" bind:value={userInput} placeholder="e.g. eleven fifty-three" onkeypress={onKeyPress} />
+<div style='display: flex;'> 
+<Button style='margin: 16px 0; width: 120px; margin-right: 32px;' color="dark" onclick={handleSubmit}>Submit</Button >
+<Button  style='margin: 16px 0; width: 120px;' color="alternative" onclick={handlePass}>Pass</Button >
+  </div>
 </div>
 
 <div style="display: flex; justify-content: center;">
-  <p style="padding: 6px;">Current Streak: {currentStreak}</p>
-  <p style="padding: 6px;">Fails: {fails}</p>
+  <P class="mt-4">Current Streak: {currentStreak}</P>
+  <P class="mt-4" style='margin-left: 16px;'>Fails: {fails}</P>
 </div>
 
 {#if userInput && result === false}
-  <p>Your answer is incorrect.</p>
-  <p>Try phrases like: "midnight", "three o'clock", "quarter past seven", "three-thirty", "three forty".</p>
+  <P>Your answer is incorrect.</P>
+  <P>Try phrases like: "midnight", "three o'clock", "quarter past seven", "three-thirty", "three forty".</P>
 {/if}
 </div>
 
+<style>
+  .lesson-title {
+    padding: 24px 0;
+    background-color: rgb(178, 212, 201);
+  }
+</style>
