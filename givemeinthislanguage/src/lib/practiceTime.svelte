@@ -91,14 +91,21 @@
 </div>
 
 <div style="display: flex; justify-content: center;">
-  <P class="mt-4">Current Streak: {currentStreak}</P>
-  <P class="mt-4" style='margin-left: 16px;'>Fails: {fails}</P>
+  <P class="mt-4">Asserted: {currentStreak}</P>
+  <P class="mt-4" style='margin-left: 16px;'>Failed: {fails}</P>
 </div>
+
+<div style="display: flex; justify-content: center; margin-top: 16px; flex-direction: column; max-width: 320px; margin: 0 auto;">
+  {#if result === true}
+  <P>Your answer is correct!</P>
+  <P>Well done!</P>
+  {/if}
 
 {#if userInput && result === false}
   <P>Your answer is incorrect.</P>
   <P>Try phrases like: "midnight", "three o'clock", "quarter past seven", "three-thirty", "three forty".</P>
 {/if}
+</div>
 </div>
 
 <style>
