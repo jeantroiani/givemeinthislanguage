@@ -1,31 +1,50 @@
 <script>
-  import { CogOutline } from 'flowbite-svelte-icons';
-
-  import { Button, Dropdown, DropdownItem, P } from "flowbite-svelte";
+  import { CogOutline } from "flowbite-svelte-icons";
+  import { Button, Dropdown, P } from "flowbite-svelte";
   import UserSettings from "../UserSettings.svelte";
-  let {is24HourFormat, selectedLanguage, handleLanguageChange, toggleTimeFormat, selectedLesson} = $props()
-
+  import AppSkeleton from "./AppSkeleton.svelte";
+  
+  let {
+    is24HourFormat,
+    selectedLanguage,
+    handleLanguageChange,
+    toggleTimeFormat,
+    selectedLesson,
+  } = $props();
 </script>
 
-<div style='display: flex; align-items:center; justify-content: space-between;'>
-<P style='font-weight: 600;' size="4xl">Dimelo</P>
-<Button id="bell" pill={true} outline={true} class="p-0 !" size="xl" color="dark" style='border: none; margin-left: auto; margin-right: 180px;'>
-  <CogOutline size='lg'/>
-</Button>
-<Dropdown triggeredBy="#bell" containerClass="w-64">
-    <UserSettings  {toggleTimeFormat} 
-    selectedLanguage={selectedLanguage} 
-    {is24HourFormat} 
-    {handleLanguageChange}
-    selectedLesson={selectedLesson} />
-</Dropdown>
-</div>
+<AppSkeleton>
+  <div
+    style="display: flex; align-items:center; justify-content: space-between; width: 100%;"
+  >
+    <h1 style="font-weight: 600; font-size:32px">Dime</h1>
+    <Button
+      id="bell"
+      pill={true}
+      outline={true}
+      class="p-0 !"
+      size="xl"
+      color="dark"
+      style="border: none; margin-left: auto;"
+    >
+      <CogOutline size="lg" />
+    </Button>
+    <Dropdown triggeredBy="#bell" containerClass="w-64">
+      <UserSettings
+        {toggleTimeFormat}
+        {selectedLanguage}
+        {is24HourFormat}
+        {handleLanguageChange}
+        {selectedLesson}
+      />
+    </Dropdown>
+  </div>
+</AppSkeleton>
 
 <style>
   div {
     display: flex;
     align-items: center;
-    background-color: rgb(142, 180, 189);
     padding: 0 24px;
   }
 </style>
