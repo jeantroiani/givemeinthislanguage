@@ -12,7 +12,7 @@
   let currentStreak: number = $state(0);
   let fails: number = $state(0);
 
-  const { selectedLanguage, is24HourFormat } = $props();
+  let { selectedLanguage, is24HourFormat } = $props();
 
   function getRandomTime(): string {
     const hours = Math.floor(Math.random() * (is24HourFormat ? 24 : 12));

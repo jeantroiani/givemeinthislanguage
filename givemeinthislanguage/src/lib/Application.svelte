@@ -2,7 +2,7 @@
   import { LessonTypes } from "../variables/lessons";
   import languages from "../wordsToNumbers/languagesMap";
   import NavBar from "./components/NavBar.svelte";
-  import PracticeTime from "./practiceTime.svelte";
+  import PracticeTime from "./PracticeTime.svelte";
 
   let language: languages = $state(languages.English);
   let is24HourFormat: boolean = $state(false);
@@ -37,8 +37,5 @@
     flex-direction: column;
     height: 100%;
     min-width: 100%;
-  }
-  .header {
-    /* background-color: rgb(142, 180, 189); */
   }
 </style>
