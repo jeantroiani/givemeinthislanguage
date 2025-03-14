@@ -19,6 +19,9 @@ export function convertEnglishTextToTime(text: string): string | undefined {
       return MIDNIGHT;
     } else if (words[0] === 'noon' || words[0] === 'midday') {
       return NOON;
+    } else if (englishNumberWordsMap[words[0]] !== undefined) {
+      hours = englishNumberWordsMap[words[0]] ?? 0;
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
     }
   }
 

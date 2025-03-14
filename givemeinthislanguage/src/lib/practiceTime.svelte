@@ -96,10 +96,6 @@
 </div>
 
 <div style="display: flex; justify-content: center; margin-top: 16px; flex-direction: column; max-width: 320px; margin: 0 auto;">
-  {#if result === true}
-  <P>Your answer is correct!</P>
-  <P>Well done!</P>
-  {/if}
 
 {#if userInput && result === false}
   <P>Your answer is incorrect.</P>

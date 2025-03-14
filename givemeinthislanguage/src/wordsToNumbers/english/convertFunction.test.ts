@@ -1,6 +1,6 @@
 import { MIDNIGHT, NOON } from '../variables';
 import { convertEnglishTextToTime } from './convertFunction';
-import { describe, test, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 
 describe('convertEnglishTextToTime', () => {
@@ -8,6 +8,7 @@ describe('convertEnglishTextToTime', () => {
     { input: "midnight", expected: MIDNIGHT },
     { input: "noon", expected: NOON },
     { input: "midday", expected: NOON },
+    { input: "seven", expected: "07:00" },
     { input: "three o'clock", expected: "03:00" },
     { input: "three twenty-five", expected: "03:25" },
     { input: "half past four", expected: "04:30" },
