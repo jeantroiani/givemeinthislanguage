@@ -41,6 +41,8 @@
     result = userTime === randomTimeConverted;
     if (result) {
       currentStreak += 1;
+      userInput = "";
+
       generateRandomTime();
     } else {
       fails += 1;
