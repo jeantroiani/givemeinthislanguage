@@ -136,17 +136,19 @@
       </ul>
     </div>
     <div style=" flex: 0 0 50%;">
-      <Label for="time" style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">
+      <Label
+        for="time"
+        style="font-size: 24px; font-weight: bold; margin-bottom: 16px;"
+      >
         Write the time in words:
-
       </Label>
-              <Input
-          id="time"
-          type="text"
-          bind:value={userInput}
-          placeholder="e.g. eleven fifty-three"
-          onkeypress={onKeyPress}
-        />
+      <Input
+        id="time"
+        type="text"
+        bind:value={userInput}
+        placeholder="e.g. eleven fifty-three"
+        onkeypress={onKeyPress}
+      />
       <div
         style="display: flex; justify-content: center; margin-top: 16px; flex-direction: column; margin: 0 auto;"
       >
@@ -166,9 +168,7 @@
           Submit
         </Button>
       </div>
-      <div
-        style="display: flex; justify-content: flex-start; flex-direction: column;"
-      >
+      <div class="score-container">
         <h3 style="margin: 0;">Score:</h3>
         <p>Asserted: {currentStreak}</p>
         <p>Failed: {fails}</p>
@@ -216,6 +216,11 @@
   p {
     margin-top: 16px;
     font-size: medium;
+  }
+  .score-container {
+    margin-top: 24px;
+    justify-content: flex-start;
+    flex-direction: column;
   }
   @media (max-width: 720px) {
     .instructions {
