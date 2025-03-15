@@ -42,9 +42,4 @@
 </AppSkeleton>
 
 <style>
-  div {
-    display: flex;
-    align-items: center;
-    padding: 0 24px;
-  }
 </style>

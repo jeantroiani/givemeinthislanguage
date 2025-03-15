@@ -102,32 +102,32 @@
     <div class="instructions">
       <h3>Tips for telling time in words:</h3>
       <ul>
-        <li>
+        <li class="instruction-item">
           <p class="instruction-paragraph">
             For hours, use words like "one", "two", "three", etc.
           </p>
         </li>
-        <li>
+        <li class="instruction-item">
           <p class="instruction-paragraph">
             For minutes, say the number: "five", "ten", "fifteen", etc.
           </p>
         </li>
-        <li>
+        <li class="instruction-item">
           <p class="instruction-paragraph">
             For whole hours, you can say "o'clock" (e.g., "five o'clock")
           </p>
         </li>
-        <li>
+        <li class="instruction-item">
           <p class="instruction-paragraph">
             For 30 minutes, you can say "half past" (e.g., "half past five")
           </p>
         </li>
-        <li>
+        <li class="instruction-item">
           <p class="instruction-paragraph">
             For 15 minutes, you can say "quarter past" or "quarter to"
           </p>
         </li>
-        <li>
+        <li class="instruction-item">
           <p class="instruction-paragraph">
             Examples: "three fifteen", "quarter past three", "half past four",
             "quarter to nine"
@@ -135,18 +135,18 @@
         </li>
       </ul>
     </div>
-    <div style="width: 320px; flex: 0 0 50%;">
-      <Label for="time" style="font-size: 0.5;">
+    <div style=" flex: 0 0 50%;">
+      <Label for="time" style="font-size: 24px; font-weight: bold; margin-bottom: 16px;">
         Write the time in words:
 
-        <Input
+      </Label>
+              <Input
           id="time"
           type="text"
           bind:value={userInput}
           placeholder="e.g. eleven fifty-three"
           onkeypress={onKeyPress}
         />
-      </Label>
       <div
         style="display: flex; justify-content: center; margin-top: 16px; flex-direction: column; margin: 0 auto;"
       >
@@ -169,7 +169,7 @@
       <div
         style="display: flex; justify-content: flex-start; flex-direction: column;"
       >
-        <h3>Score:</h3>
+        <h3 style="margin: 0;">Score:</h3>
         <p>Asserted: {currentStreak}</p>
         <p>Failed: {fails}</p>
       </div>
@@ -210,11 +210,16 @@
   }
   h3 {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: semibold;
     margin-bottom: 16px;
   }
   p {
     margin-top: 16px;
     font-size: medium;
+  }
+  @media (max-width: 720px) {
+    .instructions {
+      display: none;
+    }
   }
 </style>
